@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8b400">
+<title>Lịch Vạn Niên</title>
+<style>
+:root{--red:#a50f12;--g2:#e0a800;--g3:#8a5a00;--ln:#eadfca;--ok:#2e7d32;--gd:#b8860b;color-scheme:light;box-sizing:border-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#fffdf6;color:#2b1d12;--mist:#d6f0da}
+body[data-th=r]{--mist:#fddcd6}body[data-th=b]{--mist:#d6e8fb}
+.pg{display:none;min-height:100vh;min-height:100dvh}.pg.on{display:flex;flex-direction:column}
+button,input,select,textarea{font:inherit;color:#2b1d12;background:#fff;border:1px solid var(--ln);border-radius:10px;padding:9px 12px;font-size:15px}
+.gt{background:linear-gradient(#ffe36a,#e8b400);border-radius:0 0 50% 50%/0 0 34px 34px;padding:calc(10px + env(safe-area-inset-top,0px)) 10px 30px;display:flex;gap:8px;align-items:center;box-shadow:0 3px 0 #b88700;position:relative;z-index:2}
+.ib{width:44px;height:44px;border-radius:12px;background:#ffe9a0;border:2px solid #c99700;font-size:22px;padding:0;color:#7a5200;font-weight:700}
+.ib.cc{border-radius:50%;font-size:16px}
+.sp{flex:1}
+.mY{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font-size:46px;color:#e00;text-shadow:0 1px 0 #fff;pointer-events:none;font-weight:400}
+.mid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 14px 8px;text-align:center;background:radial-gradient(ellipse at 50% 35%,#fff 35%,var(--mist) 110%);position:relative;touch-action:pan-y}
+.wx{position:absolute;right:10px;top:46px;font-size:17px;color:#0b1fa0;text-align:center;line-height:1.2}
+.wx small{color:var(--red);font-size:14px}
+.bnw{position:relative;margin-top:8px}
+.bnw input{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+.n{font-size:min(44vw,190px);line-height:1;font-weight:700;color:var(--red);text-shadow:2px 3px 3px #0003}
+.art{margin:4px 0}.art svg{width:min(60vw,260px);height:auto}
+.q{color:#0b1f9a;font-size:17px;line-height:1.35;margin:6px 8px;min-height:46px}
+.wd{font-size:44px;font-weight:700;text-transform:capitalize;text-shadow:1px 1px 2px #0004}
+.evn{color:var(--red);font-weight:700;min-height:22px;margin-top:2px}
+.ni{display:none;position:absolute;left:12px;top:12px;font-size:22px}
+.gb{background:linear-gradient(#e8b400,#c98f00);border-radius:50% 50% 0 0/34px 34px 0 0;padding-top:34px;box-shadow:0 -3px 0 #b88700;position:relative}
+.row3{display:grid;grid-template-columns:1fr 112px 1fr;align-items:center;padding:0 8px}
+.cl{text-align:center;color:#fff}.cl small{font-size:20px;display:block}
+.cl b{display:block;font-size:24px;color:#1b2cff;margin-top:2px;padding-bottom:4px;border-bottom:1px solid #fff6}
+.cl i{display:block;font-style:normal;font-size:24px;color:#00e5ff;margin-top:4px}
+.ct{width:104px;height:104px;border-radius:50%;margin:-22px auto 0;background:radial-gradient(#c9831a,#6e3b00);box-shadow:0 0 0 5px #e8b400,0 0 0 9px #b3141a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:40px;line-height:1.05}
+.ct hr{width:60%;border:0;border-top:3px solid #e6d000;margin:2px 0}.ct span:last-child{color:#00e5ff}
+.hh{background:#0003;color:#fff;text-align:center;padding:6px;margin-top:12px;font-size:17px}
+.bt{display:grid;grid-template-columns:repeat(4,1fr);background:linear-gradient(#b4771a,#8d5410);padding:10px 4px calc(8px + env(safe-area-inset-bottom,0px))}
+.bt button{background:none;border:0;color:#fff;font-size:15px;padding:2px}.bt span{display:block;font-size:34px}
+.hd{display:flex;align-items:center;gap:10px;background:linear-gradient(#ffe36a,#e0a800);padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px;font-weight:700;font-size:19px;color:#5a3b00;box-shadow:0 2px 0 #b88700;position:sticky;top:0;z-index:3}
+.hd button{background:#ffe9a0;border-color:#c99700;padding:6px 12px}.hd span{flex:1}
+.bd{padding:12px 14px calc(24px + env(safe-area-inset-bottom,0px));max-width:520px;width:100%;margin:0 auto}
+.card{background:#fff;border:1px solid var(--ln);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:15px;line-height:1.55}
+.card h3{margin:0 0 6px;font-size:14px;color:var(--gd);letter-spacing:1px;text-transform:uppercase}
+.row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px dashed var(--ln)}
+.row:first-of-type{border-top:0}.row span:first-child{color:#8a7561}.row span:last-child{text-align:right}
+.ok{color:var(--ok);font-weight:700}.no{color:#c0281f;font-weight:700}
+.act{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px}.act b{flex:1;text-align:center}
+.hg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hc{border-radius:10px;padding:8px 2px;text-align:center;border:1px solid #ccc;background:#f3f3f3}
+.hc b{font-size:18px;display:block;color:#555}.hc small{font-size:12px;color:#777}
+.hc.g{background:#e8f5e9;border-color:#81c784}.hc.g b{color:#2e7d32}.hc.now{outline:3px solid var(--gd)}
+.g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
+.h{text-align:center;font-size:12px;color:#8a7561;padding:3px 0}.h.s{color:#c0281f}
+.c{background:#fff;border:1px solid var(--ln);border-radius:8px;min-height:54px;text-align:center;padding:4px 1px;position:relative}
+.c b{display:block;font-size:17px}.c small{font-size:11px;color:#8a7561}
+.c.r b{color:#c0281f}.c.t{outline:2px solid var(--gd)}.c.e{visibility:hidden}.c.m1 small{color:#c0281f;font-weight:700}
+.c.hd2{border-bottom:3px solid var(--ok)}.c.nt::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:#e8b400}
+.sel2{display:flex;gap:8px}.sel2 select{flex:1}
+textarea{width:100%;min-height:96px}
+.res{text-align:center;padding:14px;margin-top:10px;border:2px dashed var(--gd);border-radius:12px;display:none}
+.res b{font-size:20px;color:var(--red);display:block;margin-bottom:6px}
+.ft{font-size:12px;color:#8a7561;text-align:center;margin-top:12px}
+details{background:#fff;border:1px solid var(--ln);border-radius:12px;padding:10px 14px;margin-top:10px}
+summary{font-weight:700;color:var(--red)}details p{line-height:1.6;font-size:15px;margin:8px 0 0;white-space:pre-line}
+.dr{position:fixed;inset:0;display:none;z-index:20}.dr.on{display:flex}
+.dr nav{width:76%;max-width:300px;background:#fffaf0;padding:calc(18px + env(safe-area-inset-top,0px)) 0;overflow:auto}
+.dr nav h2{margin:0 16px 10px;color:var(--red)}
+.dr nav button{display:block;width:100%;text-align:left;border:0;border-radius:0;background:none;padding:13px 18px;font-size:17px}
+.dr .ov{flex:1;background:#0007}
+.th button{padding:10px 16px;margin-right:6px}
+@keyframes sh{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
+.shake{animation:sh .25s 4;display:inline-block}
+@keyframes fi{from{opacity:.2;transform:translateX(18px)}to{opacity:1;transform:none}}.fi{animation:fi .25s}
+</style>
+</head>
+<body data-th="g">
+
+<section class="pg on" id="p-main">
+  <div class="gt">
+    <button class="ib" id="mn" aria-label="Menu">☰</button>
+    <button class="ib cc" id="tdy" aria-label="Hôm nay"></button>
+    <div class="sp"></div>
+    <button class="ib" id="shr" aria-label="Chia sẻ">⤴</button>
+    <button class="ib" id="nt" aria-label="Ghi chú">📝</button>
+    <div class="mY" id="mY"></div>
+  </div>
+  <div class="mid" id="mid">
+    <div class="ni" id="ni">📌</div>
+    <div class="wx" id="wx"></div>
+    <div class="bnw"><div class="n" id="bn"></div><input type="date" id="dp" aria-label="Chọn ngày"></div>
+    <div class="art"><svg viewBox="0 0 200 140"><ellipse cx="100" cy="120" rx="92" ry="14" fill="#9ed8a6" opacity=".6"/><path d="M100 108c-30-4-46-24-40-50 18 6 34 22 40 50z" fill="#f48fb1"/><path d="M100 108c30-4 46-24 40-50-18 6-34 22-40 50z" fill="#f48fb1"/><path d="M100 108c-18-10-24-34 0-62 24 28 18 52 0 62z" fill="#f8bbd0"/><path d="M70 112c-14-2-24-10-26-18 14 0 26 6 26 18zM130 112c14-2 24-10 26-18-14 0-26 6-26 18z" fill="#f06292"/><ellipse cx="52" cy="124" rx="30" ry="7" fill="#4caf50"/><ellipse cx="152" cy="126" rx="26" ry="6" fill="#43a047"/><circle cx="100" cy="100" r="5" fill="#ffd54f"/></svg></div>
+    <div class="q" id="q"></div>
+    <div class="wd" id="wd"></div>
+    <div class="evn" id="evn"></div>
+  </div>
+  <div class="gb">
+    <div class="row3">
+      <div class="cl"><small>Ngày</small><b id="dcc"></b><i id="clk"></i></div>
+      <div class="ct"><span id="ld"></span><hr><span id="lm"></span></div>
+      <div class="cl"><small>Tháng</small><b id="mcc"></b><i id="ycc" style="color:#c6ffb0"></i></div>
+    </div>
+    <div class="hh" id="hh"></div>
+    <div class="bt">
+      <button data-go="detail"><span>☯️</span>Chi tiết</button>
+      <button data-go="month"><span>🗓️</span>Lịch tháng</button>
+      <button data-go="conv"><span>🔄</span>Đổi ngày</button>
+      <button data-go="van"><span>🙏</span>Văn khấn</button>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="p-month">
+  <div class="hd"><button onclick="go('main')">←</button><span>Lịch tháng</span></div>
+  <div class="bd">
+    <div class="act"><button onclick="mv(-1)">‹</button><div class="sel2" style="flex:1"><select id="sm"></select><select id="sy"></select></div><button onclick="mv(1)">›</button></div>
+    <div class="g" id="gr"></div>
+    <div class="card" id="mev"></div>
+    <div class="ft">Gạch xanh = ngày hoàng đạo · chấm vàng = có ghi chú</div>
+  </div>
+</section>
+
+<section class="pg" id="p-detail">
+  <div class="hd"><button onclick="go('main')">←</button><span>Chi tiết ngày</span></div>
+  <div class="bd" id="dtl"></div>
+</section>
+
+<section class="pg" id="p-conv">
+  <div class="hd"><button onclick="go('main')">←</button><span>Đổi ngày</span></div>
+  <div class="bd">
+    <div class="card"><h3>Dương lịch → Âm lịch</h3><input type="date" id="cd" style="width:100%"><button style="margin-top:8px" onclick="s2l()">Đổi</button><div id="cr"></div></div>
+    <div class="card"><h3>Âm lịch → Dương lịch</h3>
+      <div class="sel2"><input type="number" id="l1" placeholder="Ngày" min="1" max="30"><input type="number" id="l2" placeholder="Tháng" min="1" max="12"><input type="number" id="l3" placeholder="Năm" min="1900" max="2100"></div>
+      <label style="display:block;margin:8px 0"><input type="checkbox" id="l4"> Tháng nhuận</label><button onclick="l2sBtn()">Đổi</button><div id="cr2"></div></div>
+  </div>
+</section>
+
+<section class="pg" id="p-van">
+  <div class="hd"><button onclick="go('main')">←</button><span>Văn khấn</span></div>
+  <div class="bd">
+    <details><summary>Văn khấn mùng Một, ngày Rằm</summary><p>Nam mô A Di Đà Phật! (3 lần)
+Con kính lạy: Hoàng thiên Hậu thổ chư vị Tôn thần; Ngài Bản cảnh Thành hoàng chư vị Đại vương; Ngài Bản xứ Thần linh Thổ địa; Ngài Bản gia Táo quân, Ngũ phương Long mạch, Tài thần.
+Con kính lạy các cụ Tổ tiên nội ngoại họ …
+Tín chủ (chúng) con là: …… ngụ tại: ……
+Hôm nay là ngày … tháng … năm …, tín chủ con thành tâm sắm sửa hương hoa, lễ vật, trà quả dâng lên trước án, kính mời chư vị Tôn thần, Gia tiên chứng giám.
+Cúi xin phù hộ độ trì cho gia đình chúng con mạnh khỏe, bình an, công việc hanh thông, vạn sự như ý.
+Chúng con lễ bạc tâm thành, kính cẩn trước án. Nam mô A Di Đà Phật! (3 lần)</p></details>
+    <details><summary>Văn khấn gia tiên</summary><p>Nam mô A Di Đà Phật! (3 lần)
+Con kính lạy Hương linh Cao Tằng Tổ khảo, Cao Tằng Tổ tỉ, các vị Tiên linh nội ngoại họ …
+Hôm nay là ngày … tháng … năm …, tín chủ con là: …… ngụ tại: ……
+Nhân ngày … , con thành tâm sắm lễ, hương hoa, trà quả dâng lên trước bàn thờ, kính mời các cụ về chứng giám lòng thành.
+Cúi xin Tổ tiên phù hộ cho con cháu bình an, làm ăn tấn tới, hiếu thuận hòa thuận.
+Nam mô A Di Đà Phật! (3 lần)</p></details>
+    <details><summary>Văn khấn ông Công, ông Táo (23 tháng Chạp)</summary><p>Nam mô A Di Đà Phật! (3 lần)
+Con kính lạy Ngài Đông Trù Tư mệnh Táo phủ Thần quân.
+Hôm nay là ngày 23 tháng Chạp, tín chủ con là: …… ngụ tại: ……
+Nhân ngày ông Công, ông Táo chầu trời, tín chủ con sắm sửa lễ vật, hương hoa, cá chép, mũ áo, kính dâng lên Ngài.
+Xin Ngài tâu với Thiên đình những điều lành, xá tội cho gia đình chúng con, ban cho một năm mới bình an, no đủ.
+Nam mô A Di Đà Phật! (3 lần)</p></details>
+    <details><summary>Văn khấn Thần Tài, Thổ Địa (khai trương)</summary><p>Nam mô A Di Đà Phật! (3 lần)
+Con kính lạy Ngài Thần Tài, Ngài Thổ Địa, chư vị Thần linh cai quản nơi đây.
+Tín chủ con là: …… kinh doanh tại: ……
+Hôm nay là ngày … tháng … năm …, con xin dâng hương hoa, lễ vật, kính mong các Ngài chứng giám, phù hộ cho việc buôn bán thuận lợi, khách khứa đông vui, tài lộc dồi dào, gặp nhiều may mắn.
+Nam mô A Di Đà Phật! (3 lần)</p></details>
+    <div class="ft">Điền họ tên, địa chỉ, ngày tháng vào chỗ có dấu …</div>
+  </div>
+</section>
+
+<section class="pg" id="p-note">
+  <div class="hd"><button onclick="go('main')">←</button><span>Ghi chú</span></div>
+  <div class="bd">
+    <input type="date" id="ndp" style="width:100%">
+    <textarea id="nta" placeholder="Ghi chú cho ngày này…" style="margin-top:8px"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px"><button onclick="saveNote()" style="background:#a50f12;color:#fff;border-color:#a50f12">Lưu</button><button onclick="$('nta').value='';saveNote()">Xóa</button></div>
+    <div class="card"><h3>Tất cả ghi chú</h3><div id="nl"></div></div>
+  </div>
+</section>
+
+<section class="pg" id="p-boi">
+  <div class="hd"><button onclick="go('main')">←</button><span>Bói</span></div>
+  <div class="bd">
+    <div class="card"><h3>Bói tuổi</h3>
+      <div style="display:flex;gap:8px"><input type="number" id="by" placeholder="Năm sinh (VD: 1995)" min="1900" max="2100" style="flex:1;min-width:0"><button id="bb" style="background:#a50f12;color:#fff;border-color:#a50f12">Xem</button></div>
+      <div id="br"></div></div>
+    <div class="card" style="text-align:center"><h3>Xin quẻ</h3>
+      <div style="font-size:48px" id="qi">🎋</div>
+      <div style="color:#8a7561;font-size:13px;margin:4px 0 10px">Thành tâm nghĩ điều muốn hỏi rồi rút quẻ</div>
+      <button id="qb" style="background:#a50f12;color:#fff;border-color:#a50f12">Rút quẻ</button>
+      <div class="res" id="qr"></div></div>
+    <div class="ft">Xem ngày, bói toán chỉ mang tính tham khảo và giải trí.</div>
+  </div>
+</section>
+
+<section class="pg" id="p-set">
+  <div class="hd"><button onclick="go('main')">←</button><span>Cài đặt</span></div>
+  <div class="bd">
+    <div class="card th"><h3>Màu nền tờ lịch</h3><button onclick="setTh('g')">🟢 Xanh</button><button onclick="setTh('r')">🔴 Hồng</button><button onclick="setTh('b')">🔵 Lam</button></div>
+    <div class="card"><h3>Thành phố (thời tiết)</h3><select id="cs" style="width:100%"></select><div class="ft" style="text-align:left">Thời tiết cần kết nối mạng.</div></div>
+  </div>
+</section>
+
+<div class="dr" id="dr"><nav id="dn"><h2>Lịch Vạn Niên</h2></nav><div class="ov" id="ov"></div></div>
+
+<script>
+var TZ=7,PI=Math.PI,F=Math.floor,$=function(i){return document.getElementById(i)};
+var CAN=["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"];
+var CHI=["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+var CON=["Chuột","Trâu","Hổ","Mèo","Rồng","Rắn","Ngựa","Dê","Khỉ","Gà","Chó","Heo"];
+var HRS=["23h–1h","1h–3h","3h–5h","5h–7h","7h–9h","9h–11h","11h–13h","13h–15h","15h–17h","17h–19h","19h–21h","21h–23h"];
+var HD=[[0,1,3,6,8,9],[2,3,5,8,10,11],[0,1,4,5,7,10],[0,2,3,6,7,9],[2,4,5,8,9,11],[1,4,6,7,10,11]];
+var THU=["Chủ nhật","Thứ hai","Thứ ba","Thứ tư","Thứ năm","Thứ sáu","Thứ bảy"];
+var TERM=["Xuân phân","Thanh minh","Cốc vũ","Lập hạ","Tiểu mãn","Mang chủng","Hạ chí","Tiểu thử","Đại thử","Lập thu","Xử thử","Bạch lộ","Thu phân","Hàn lộ","Sương giáng","Lập đông","Tiểu tuyết","Đại tuyết","Đông chí","Tiểu hàn","Đại hàn","Lập xuân","Vũ thủy","Kinh trập"];
+var STAR=[["Thanh Long",1],["Minh Đường",1],["Thiên Hình",0],["Chu Tước",0],["Kim Quỹ",1],["Bảo Quang",1],["Bạch Hổ",0],["Ngọc Đường",1],["Thiên Lao",0],["Huyền Vũ",0],["Tư Mệnh",1],["Câu Trận",0]];
+var TRUC=[["Kiến","xuất hành, cưới hỏi, nhậm chức","động thổ, an táng"],["Trừ","dọn dẹp, chữa bệnh, cúng tế","cưới hỏi, xuất hành xa"],["Mãn","cúng lễ, cầu tài, khai trương","an táng, nhậm chức"],["Bình","sửa chữa, đi lại, việc thường","đào đất, gieo trồng lớn"],["Định","cưới hỏi, ký hợp đồng, nhập học","kiện tụng, xuất hành xa"],["Chấp","xây dựng, nhập kho, cầu phúc","khai trương, xuất hành"],["Phá","phá dỡ, dọn dẹp, chữa bệnh","cưới hỏi, khai trương, ký kết"],["Nguy","cúng lễ, tĩnh tâm","leo cao, đi xa, việc lớn"],["Thành","khai trương, cưới hỏi, ký kết, nhập trạch","kiện tụng, tranh chấp"],["Thu","thu hoạch, thu nợ, nhập kho","an táng, xuất hành"],["Khai","khai trương, động thổ, xuất hành, cưới hỏi","an táng"],["Bế","đắp đê, lấp hố, cúng tế","khai trương, xuất hành, cưới hỏi"]];
+var HY=["Đông Bắc","Tây Bắc","Tây Nam","Chính Nam","Đông Nam"];
+var TAI=["Đông Nam","Đông Nam","Đông","Đông","Bắc","Nam","Tây Nam","Tây Nam","Tây","Tây"];
+var NA=["Hải trung kim","Lư trung hỏa","Đại lâm mộc","Lộ bàng thổ","Kiếm phong kim","Sơn đầu hỏa","Giản hạ thủy","Thành đầu thổ","Bạch lạp kim","Dương liễu mộc","Tuyền trung thủy","Ốc thượng thổ","Tích lịch hỏa","Tùng bách mộc","Trường lưu thủy","Sa trung kim","Sơn hạ hỏa","Bình địa mộc","Bích thượng thổ","Kim bạch kim","Phú đăng hỏa","Thiên hà thủy","Đại trạch thổ","Thoa xuyến kim","Tang đố mộc","Đại khê thủy","Sa trung thổ","Thiên thượng hỏa","Thạch lựu mộc","Đại hải thủy"];
+var SAY=["Có công mài sắt, có ngày nên kim.","Lá lành đùm lá rách.","Ăn quả nhớ kẻ trồng cây.","Uống nước nhớ nguồn.","Có chí thì nên.","Đi một ngày đàng, học một sàng khôn.","Gần mực thì đen, gần đèn thì rạng.","Ở hiền gặp lành.","Thất bại là mẹ thành công.","Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao.","Học ăn, học nói, học gói, học mở.","Chậm mà chắc."];
+var SOLAR={"1/1":"Tết Dương lịch","14/2":"Valentine","8/3":"Quốc tế Phụ nữ","30/4":"Giải phóng miền Nam","1/5":"Quốc tế Lao động","1/6":"Quốc tế Thiếu nhi","2/9":"Quốc khánh","20/10":"Phụ nữ Việt Nam","20/11":"Nhà giáo Việt Nam","24/12":"Giáng sinh"};
+var LUNAR={"1/1":"Tết Nguyên đán","2/1":"Mùng 2 Tết","3/1":"Mùng 3 Tết","15/1":"Rằm tháng Giêng","3/3":"Tết Hàn thực","10/3":"Giỗ Tổ Hùng Vương","15/4":"Lễ Phật Đản","5/5":"Tết Đoan Ngọ","15/7":"Lễ Vu Lan","15/8":"Tết Trung Thu","23/12":"Ông Táo chầu trời"};
+var QUE=[["Thượng thượng cát","Mây tan trăng sáng. Việc lớn hanh thông, có quý nhân phù trợ."],["Thượng cát","Gió xuân đưa thuyền. Cầu tài, cầu duyên đều thuận lợi."],["Trung cát","Chậm mà chắc. Kiên nhẫn sẽ gặt quả ngọt."],["Trung bình","Nước chảy đá mòn. Giữ vững ý chí, đừng nóng vội."],["Bình","Việc chưa thành cũng chưa bại, cần thêm thời gian."],["Tiểu cát","Lộc nhỏ đến nhà, biết đủ là vui."],["Trung bình","Cẩn trọng lời nói, tránh tranh cãi với người thân."],["Hạ bình","Gặp chút trở ngại, biết nhẫn nhịn sẽ qua."],["Tiểu hung","Chớ đầu tư mạo hiểm, hãy chờ thời cơ."],["Cát","Người xa có tin vui, gia đạo bình an."],["Cát","Học hành thi cử đỗ đạt, công danh tiến bước."],["Bình cát","Tình duyên nở muộn nhưng bền lâu."]];
+
+/* ===== Âm lịch (thuật toán Hồ Ngọc Đức, GMT+7) ===== */
+function jdOf(d,m,y){var a=F((14-m)/12),Y=y+4800-a,M=m+12*a-3;return d+F((153*M+2)/5)+365*Y+F(Y/4)-F(Y/100)+F(Y/400)-32045}
+function newMoon(k){var T=k/1236.85,T2=T*T,T3=T2*T,r=PI/180,s=Math.sin;
+  var J=2415020.75933+29.53058868*k+0.0001178*T2-0.000000155*T3+0.00033*s((166.56+132.87*T-0.009173*T2)*r);
+  var M=359.2242+29.10535608*k-0.0000333*T2-0.00000347*T3,P=306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3,Fk=21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3;
+  var C=(0.1734-0.000393*T)*s(M*r)+0.0021*s(2*r*M)-0.4068*s(P*r)+0.0161*s(r*2*P)-0.0004*s(r*3*P)+0.0104*s(r*2*Fk)-0.0051*s(r*(M+P))-0.0074*s(r*(M-P))+0.0004*s(r*(2*Fk+M))-0.0004*s(r*(2*Fk-M))-0.0006*s(r*(2*Fk+P))+0.001*s(r*(2*Fk-P))+0.0005*s(r*(2*P+M));
+  var dt=T<-11?0.001+0.000839*T+0.0002261*T2-0.00000845*T3-0.000000081*T*T3:-0.000278+0.000265*T+0.000262*T2;
+  return F(J+C-dt+0.5+TZ/24)}
+function sunL(j,n){var T=(j-2451545.5-TZ/24)/36525,T2=T*T,r=PI/180;
+  var M=357.5291+35999.0503*T-0.0001559*T2-0.00000048*T*T2,L0=280.46645+36000.76983*T+0.0003032*T2;
+  var D=(1.9146-0.004817*T-0.000014*T2)*Math.sin(r*M)+(0.019993-0.000101*T)*Math.sin(r*2*M)+0.00029*Math.sin(r*3*M);
+  var L=(L0+D)*r;L-=PI*2*F(L/(PI*2));return F(L/PI*n)}
+function m11(y){var k=F((jdOf(31,12,y)-2415021)/29.530588853),nm=newMoon(k);if(sunL(nm,6)>=9)nm=newMoon(k-1);return nm}
+function leapOff(a){var k=F((a-2415021.076998695)/29.530588853+0.5),last,i=1,arc=sunL(newMoon(k+i),6);
+  do{last=arc;i++;arc=sunL(newMoon(k+i),6)}while(arc!=last&&i<14);return i-1}
+function info(d,m,y){
+  var j=jdOf(d,m,y),k=F((j-2415021.076998695)/29.530588853),ms=newMoon(k+1);if(ms>j)ms=newMoon(k);
+  var a=m11(y),b=a,ly;if(a>=ms){ly=y;a=m11(y-1)}else{ly=y+1;b=m11(y+1)}
+  var ld=j-ms+1,df=F((ms-a)/29),leap=0,lm=df+11;
+  if(b-a>365){var lo=leapOff(a);if(df>=lo){lm=df+10;if(df==lo)leap=1}}
+  if(lm>12)lm-=12;if(lm>=11&&df<4)ly--;
+  var o={d:ld,m:lm,y:ly,leap:leap,jd:j,ch:(j+1)%12,cn:(j+9)%10};
+  o.dayCC=CAN[o.cn]+" "+CHI[o.ch];o.monCC=CAN[(ly*12+lm+3)%10]+" "+CHI[(lm+1)%12];o.yearCC=CAN[(ly+6)%10]+" "+CHI[(ly+8)%12];
+  var st=((o.ch-[0,2,4,6,8,10][(lm-1)%6]+12)%12);o.star=STAR[st];
+  o.truc=TRUC[(o.ch-(lm+1)%12+12)%12];
+  var s=sunL(j,12);o.term=TERM[s];o.termStart=s!=sunL(j-1,12);
+  o.ev=[];if(SOLAR[d+"/"+m])o.ev.push(SOLAR[d+"/"+m]);if(!leap&&LUNAR[ld+"/"+lm])o.ev.push(LUNAR[ld+"/"+lm]);
+  return o}
+
+/* ===== UI ===== */
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function pad(n){return n<10?"0"+n:""+n}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+var now=new Date(),cur={d:now.getDate(),m:now.getMonth()+1,y:now.getFullYear()},vm=cur.m,vy=cur.y,page="main";
+var S=ld("lvn_s",{th:"g",c:0}),NT=ld("lvn_n",{});
+var CITY=[["Hà Nội",21.03,105.85],["TP. Hồ Chí Minh",10.78,106.7],["Đà Nẵng",16.05,108.2],["Huế",16.46,107.59],["Cần Thơ",10.03,105.78]];
+var PG=["main","month","detail","conv","van","note","boi","set"];
+var MENU=[["main","📅","Tờ lịch"],["month","🗓️","Lịch tháng"],["detail","📖","Chi tiết ngày"],["conv","🔄","Đổi ngày"],["note","📝","Ghi chú"],["van","🙏","Văn khấn"],["boi","🔮","Bói"],["set","⚙️","Cài đặt"]];
+var QT=SAY.map(function(s){return[s,""]}).concat([["Hành trình vạn dặm bắt đầu từ một bước chân.","Lão Tử"],["Điều gì mình không muốn, đừng làm cho người khác.","Khổng Tử"],["Chữ tâm kia mới bằng ba chữ tài.","Nguyễn Du"]]);
+var KM=[["Đại An","mọi việc tốt lành, xuất hành cầu tài đều thuận"],["Lưu Liên","khó thành, hay trì trệ, nên kiên nhẫn"],["Tốc Hỷ","có tin vui, cầu tài thuận lợi"],["Xích Khẩu","dễ cãi vã, nên đề phòng lời nói"],["Tiểu Cát","may mắn, buôn bán thuận lợi"],["Không Vong","mất công, nên hoãn việc quan trọng"]];
+function dow(c){return new Date(c.y,c.m-1,c.d).getDay()}
+function key(c){return c.y+"-"+pad(c.m)+"-"+pad(c.d)}
+function setCur(t){cur={d:t.getDate(),m:t.getMonth()+1,y:t.getFullYear()}}
+function step(n){setCur(new Date(cur.y,cur.m-1,cur.d+n));refresh();var m=$("mid");m.classList.remove("fi");void m.offsetWidth;m.classList.add("fi")}
+function l2s(ld_,lm,ly,leap){for(var i=0;i<430;i++){var t=new Date(ly,0,1+i),o=info(t.getDate(),t.getMonth()+1,t.getFullYear());if(o.d==ld_&&o.m==lm&&o.y==ly&&o.leap==(leap?1:0))return t}return null}
+
+function main(){
+  var l=info(cur.d,cur.m,cur.y),w=dow(cur);
+  $("mY").textContent=pad(cur.m)+"/"+cur.y;
+  $("bn").textContent=cur.d;$("bn").style.color=(w==0||l.ev.length)?"#d40000":"#a50f12";
+  $("wd").textContent=THU[w];$("wd").style.color=w==0?"#d40000":"#12b012";
+  var q=QT[l.jd%QT.length];$("q").textContent="“"+q[0]+"”"+(q[1]?" ("+q[1]+")":"");
+  $("evn").textContent=l.ev.concat(l.termStart?["Tiết "+l.term]:[]).join(" · ");
+  $("ld").textContent=l.d;$("lm").textContent=l.m+(l.leap?"n":"");
+  $("dcc").textContent=l.dayCC;$("mcc").textContent=l.monCC;$("ycc").textContent=l.yearCC;
+  $("hh").textContent="Giờ Hoàng Đạo: "+HD[l.ch%6].map(function(i){return CHI[i]}).join(", ");
+  $("dp").value=key(cur);$("tdy").textContent=now.getDate();
+  $("ni").style.display=NT[key(cur)]?"block":"none";
+}
+function detail(){
+  var l=info(cur.d,cur.m,cur.y),w=dow(cur),g=HD[l.ch%6],km=KM[(l.m+l.d-2)%6],ky=[],isT=key(cur)==key({d:now.getDate(),m:now.getMonth()+1,y:now.getFullYear()}),ci=F(((now.getHours()+1)%24)/2);
+  if([3,7,13,18,22,27].indexOf(l.d)>=0)ky.push("Tam nương");
+  if([5,14,23].indexOf(l.d)>=0)ky.push("Nguyệt kỵ");
+  var h='<div class="act"><button onclick="step(-1)">‹</button><b>'+THU[w]+", "+cur.d+"/"+cur.m+"/"+cur.y+'</b><button onclick="step(1)">›</button></div>'
+  +'<div class="card"><h3>Thông tin ngày</h3>'
+  +'<div class="row"><span>Âm lịch</span><span>'+l.d+"/"+l.m+(l.leap?" (nhuận)":"")+" năm "+l.yearCC+'</span></div>'
+  +'<div class="row"><span>Ngày</span><span>'+l.dayCC+'</span></div>'
+  +'<div class="row"><span>Tháng</span><span>'+l.monCC+'</span></div>'
+  +'<div class="row"><span>Tiết khí</span><span>'+l.term+(l.termStart?" (bắt đầu hôm nay)":"")+'</span></div>'
+  +'<div class="row"><span>Hoàng/Hắc đạo</span><span class="'+(l.star[1]?"ok":"no")+'">'+(l.star[1]?"Hoàng đạo":"Hắc đạo")+" · "+l.star[0]+'</span></div>'
+  +'<div class="row"><span>Trực</span><span>'+l.truc[0]+'</span></div>'
+  +'<div class="row"><span>Hỷ thần</span><span>'+HY[l.cn%5]+'</span></div>'
+  +'<div class="row"><span>Tài thần</span><span>'+TAI[l.cn]+'</span></div>'
+  +'<div class="row"><span>Tuổi xung</span><span>'+CHI[(l.ch+6)%12]+'</span></div>'
+  +(ky.length?'<div class="row"><span>Ngày kỵ</span><span class="no">'+ky.join(", ")+'</span></div>':"")
+  +(l.ev.length?'<div class="row"><span>Sự kiện</span><span>'+l.ev.join(", ")+'</span></div>':"")+'</div>'
+  +'<div class="card"><h3>Xuất hành Khổng Minh</h3><b>'+km[0]+"</b>: "+km[1]+'</div>'
+  +'<div class="card"><h3>Nên làm</h3><span class="ok">✔ </span>'+l.truc[1]+'</div>'
+  +'<div class="card"><h3>Nên tránh</h3><span class="no">✘ </span>'+l.truc[2]+'</div>'
+  +'<div class="card"><h3>Giờ tốt xấu</h3><div class="hg">';
+  for(var i=0;i<12;i++){var ok=g.indexOf(i)>=0;h+='<div class="hc'+(ok?" g":"")+(isT&&i==ci?" now":"")+'"><b>'+CHI[i]+'</b><small>'+HRS[i]+'</small><br><small>'+(ok?"Hoàng đạo":"Hắc đạo")+'</small></div>'}
+  $("dtl").innerHTML=h+'</div></div><div class="ft">Nội dung xem ngày mang tính tham khảo.</div>';
+}
+function month(){
+  $("sm").value=vm;$("sy").value=vy;
+  var n=new Date(vy,vm,0).getDate(),f=(new Date(vy,vm-1,1).getDay()+6)%7,h="",ev="";
+  ["T2","T3","T4","T5","T6","T7","CN"].forEach(function(x,i){h+='<div class="h'+(i==6?" s":"")+'">'+x+'</div>'});
+  for(var i=0;i<f;i++)h+='<div class="c e"></div>';
+  for(var d=1;d<=n;d++){var l=info(d,vm,vy),w=(f+d-1)%7,k=vy+"-"+pad(vm)+"-"+pad(d);
+    h+='<div class="c'+(w==6||l.ev.length?" r":"")+(l.d==1?" m1":"")+(l.star[1]?" hd2":"")+(NT[k]?" nt":"")+(d==now.getDate()&&vm==now.getMonth()+1&&vy==now.getFullYear()?" t":"")+'" data-d="'+d+'"><b>'+d+'</b><small>'+(l.d==1?l.d+"/"+l.m:l.d)+'</small></div>';
+    if(l.ev.length)ev+='<div class="row"><span>'+d+"/"+vm+'</span><span>'+l.ev.join(", ")+'</span></div>'}
+  $("gr").innerHTML=h;$("mev").innerHTML='<h3>Sự kiện trong tháng</h3>'+(ev||'<span style="color:#8a7561">Không có</span>');
+}
+function mv(n){vm+=n;if(vm<1){vm=12;vy--}if(vm>12){vm=1;vy++}if(vy<1900){vy=1900;vm=1}if(vy>2100){vy=2100;vm=12}month()}
+function s2l(){var v=$("cd").value.split("-");if(v.length<3)return;var l=info(+v[2],+v[1],+v[0]);
+  $("cr").innerHTML='<div class="row" style="margin-top:8px"><span>Âm lịch</span><span>'+l.d+"/"+l.m+(l.leap?" (nhuận)":"")+" năm "+l.yearCC+'</span></div><div class="row"><span>Ngày</span><span>'+l.dayCC+'</span></div><div class="row"><span>Tháng</span><span>'+l.monCC+'</span></div>'}
+function l2sBtn(){var d=+$("l1").value,m=+$("l2").value,y=+$("l3").value;
+  if(!(d>=1&&d<=30&&m>=1&&m<=12&&y>=1900&&y<=2100)){$("cr2").textContent="Vui lòng nhập ngày, tháng, năm hợp lệ";return}
+  var t=l2s(d,m,y,$("l4").checked);
+  $("cr2").innerHTML=t?'<div class="row" style="margin-top:8px"><span>Dương lịch</span><span class="ok">'+THU[t.getDay()]+", "+t.getDate()+"/"+(t.getMonth()+1)+"/"+t.getFullYear()+'</span></div>':'<div class="no" style="margin-top:8px">Không có ngày âm lịch này</div>'}
+function notes(){
+  $("ndp").value=key(cur);$("nta").value=NT[key(cur)]||"";
+  var ks=Object.keys(NT).sort(),h="";
+  ks.forEach(function(k){h+='<div class="row" onclick="pick(\''+k+'\')" style="cursor:pointer"><span>'+k.split("-").reverse().join("/")+'</span><span>'+esc(NT[k].slice(0,60))+'</span></div>'});
+  $("nl").innerHTML=h||'<span style="color:#8a7561">Chưa có ghi chú</span>';
+}
+function pick(k){var p=k.split("-");cur={y:+p[0],m:+p[1],d:+p[2]};notes()}
+function saveNote(){var t=$("nta").value.trim();if(t)NT[key(cur)]=t;else delete NT[key(cur)];sv("lvn_n",NT);notes()}
+function setTh(t){S.th=t;document.body.dataset.th=t;sv("lvn_s",S)}
+var R={main:main,month:month,detail:detail,note:notes};
+function refresh(){if(R[page])R[page]()}
+function go(p){page=p;PG.forEach(function(x){$("p-"+x).classList.toggle("on",x==p)});$("dr").classList.remove("on");if(p=="month"){vm=cur.m;vy=cur.y}refresh();window.scrollTo(0,0)}
+window.onBack=function(){if($("dr").classList.contains("on")){$("dr").classList.remove("on");return true}if(page!="main"){go("main");return true}return false};
+function share(){var l=info(cur.d,cur.m,cur.y),t="Ngày "+cur.d+"/"+cur.m+"/"+cur.y+" ("+THU[dow(cur)]+")\nÂm lịch: "+l.d+"/"+l.m+(l.leap?" nhuận":"")+" năm "+l.yearCC+"\nNgày "+l.dayCC+", tháng "+l.monCC+"\n"+$("hh").textContent;
+  if(window.Android&&Android.share)Android.share(t);else if(navigator.share)navigator.share({text:t}).catch(function(){});else if(navigator.clipboard){navigator.clipboard.writeText(t);alert("Đã chép nội dung ngày")}}
+function weather(){var c=CITY[S.c];$("wx").textContent="";
+  try{fetch("https://api.open-meteo.com/v1/forecast?latitude="+c[1]+"&longitude="+c[2]+"&current_weather=true").then(function(r){return r.json()}).then(function(j){var w=j.current_weather,k=w.weathercode,e=k==0?"☀️":k<4?"⛅":k<50?"🌫️":k<70?"🌧️":k<80?"❄️":k<90?"🌦️":"⛈️";$("wx").innerHTML=e+" "+Math.round(w.temperature)+"°C<br><small>"+c[0]+"</small>"}).catch(function(){})}catch(e){}}
+
+/* khởi tạo */
+(function(){
+  var h="";for(var i=1;i<=12;i++)h+='<option value="'+i+'">Tháng '+i+'</option>';$("sm").innerHTML=h;
+  h="";for(var y=1900;y<=2100;y++)h+='<option value="'+y+'">'+y+'</option>';$("sy").innerHTML=h;
+  h="";CITY.forEach(function(c,i){h+='<option value="'+i+'">'+c[0]+'</option>'});$("cs").innerHTML=h;$("cs").value=S.c;
+  $("cs").onchange=function(){S.c=+this.value;sv("lvn_s",S);weather()};
+  document.body.dataset.th=S.th;
+  MENU.forEach(function(m){var b=document.createElement("button");b.textContent=m[1]+"  "+m[2];b.onclick=function(){go(m[0])};$("dn").appendChild(b)});
+  $("mn").onclick=function(){$("dr").classList.add("on")};$("ov").onclick=function(){$("dr").classList.remove("on")};
+  $("tdy").onclick=function(){setCur(new Date());refresh()};
+  $("shr").onclick=share;$("nt").onclick=function(){go("note")};
+  [].forEach.call(document.querySelectorAll("[data-go]"),function(b){b.onclick=function(){go(b.dataset.go)}});
+  $("dp").onchange=function(){var p=this.value.split("-");if(p.length==3){cur={y:+p[0],m:+p[1],d:+p[2]};main()}};
+  $("ndp").onchange=function(){var p=this.value.split("-");if(p.length==3){cur={y:+p[0],m:+p[1],d:+p[2]};notes()}};
+  $("sm").onchange=function(){vm=+this.value;month()};$("sy").onchange=function(){vy=+this.value;month()};
+  $("gr").onclick=function(e){var c=e.target.closest(".c[data-d]");if(c){cur={d:+c.dataset.d,m:vm,y:vy};go("main")}};
+  var sx=0,sy=0,mid=$("mid");
+  mid.addEventListener("touchstart",function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  mid.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))step(dx<0?1:-1)},{passive:true});
+  setInterval(function(){var t=new Date();$("clk").textContent=pad(t.getHours())+":"+pad(t.getMinutes())+":"+pad(t.getSeconds())},1000);
+  var t=new Date();$("clk").textContent=pad(t.getHours())+":"+pad(t.getMinutes())+":"+pad(t.getSeconds());
+  main();weather();
+})();
+/* ===== Bói ===== */
+function rel(a,b){var d=(b-a+12)%12;if(d==6)return["Xung","no"];if((a+b)%12==1)return["Lục hợp","ok"];if(d==4||d==8)return["Tam hợp","ok"];return["Bình thường",""]}
+$("bb").onclick=function(){var y=+$("by").value;if(y<1900||y>2100){$("br").innerHTML='<div class="row"><span>Nhập năm sinh từ 1900 đến 2100</span></div>';return}
+  var i=(y-4)%60,c=(y+8)%12,l=info(cur.d,cur.m,cur.y),r=rel(c,l.ch);
+  $("br").innerHTML='<div class="row"><span>Tuổi</span><span>'+CAN[(y+6)%10]+" "+CHI[c]+' ('+CON[c]+')</span></div>'
+  +'<div class="row"><span>Mệnh nạp âm</span><span>'+NA[F(i/2)]+'</span></div>'
+  +'<div class="row"><span>Hôm nay ('+cur.d+'/'+cur.m+') ngày '+CHI[l.ch]+'</span><span class="'+r[1]+'">'+r[0]+'</span></div>'
+  +'<div class="row"><span>Tuổi tam hợp</span><span>'+CHI[(c+4)%12]+", "+CHI[(c+8)%12]+'</span></div>'
+  +'<div class="row"><span>Tuổi lục hợp</span><span>'+CHI[(13-c)%12]+'</span></div>'
+  +'<div class="row"><span>Tuổi xung</span><span>'+CHI[(c+6)%12]+'</span></div>'};
+$("qb").onclick=function(){var q=$("qi"),r=$("qr");r.style.display="none";q.className="shake";
+  setTimeout(function(){q.className="";var x=QUE[Math.floor(Math.random()*QUE.length)];
+    r.innerHTML='<b>'+x[0]+'</b>'+x[1];r.style.display="block"},1000)};
+</script>
+</body>
+</html>
